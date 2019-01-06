@@ -1,0 +1,17 @@
+class MQTT:
+    def __init__(self):
+        self.Host = "139.199.89.222"
+        self.Port = 1883
+        self.Client = mqtt.Client()
+        self.Client.connect(self.Host,self.Port,60)
+
+    def publish(self,Topic,Message):
+        self.Client.publish(Topic,Message,qos=0,retain=False)
+
+    def subcribe(self,Topic):
+        self.Client.loop_start()
+        self.Client.subscribe(Topic,1)
+        self.Client.on_message = self.on_message_come
+
+    def on_message_come(self,client,userdata,msg):
+        Message.append(msg.payload.decode('gbk'))
